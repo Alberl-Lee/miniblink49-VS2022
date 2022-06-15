@@ -1,4 +1,4 @@
-# 简介  
+# 简介 
 miniblink是基于chromium的浏览器控件，也可以用来开发软件（类似于electron），更多信息请见官网http://miniblink.net 
 而blinkUI是基于blink的UI界面库，只保留UI相关的部分，去掉了所有浏览器的功能，单纯只用来开发UI界面
 用web(js+HTML+CSS)写界面，C++写逻辑。既有web的开发效率，又有C++的运行速度
