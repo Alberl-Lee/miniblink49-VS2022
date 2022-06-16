@@ -177,7 +177,7 @@ public:
 
     // A frame specific cookie jar.  May return null, in which case
     // WebKitPlatformSupport::cookieJar() will be called to access cookies.
-    virtual WebCookieJar* cookieJar(WebLocalFrame*) override;
+    //virtual WebCookieJar* cookieJar(WebLocalFrame*) override;
 
     // Dialogs -------------------------------------------------------------
 

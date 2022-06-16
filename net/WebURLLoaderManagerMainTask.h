@@ -46,15 +46,15 @@ struct MainTaskArgs {
         args->ref = 0;
         memcpy(args->ptr, ptr, totalSize);
 
-        curl_easy_getinfo(handle, !isProxyConnect ? CURLINFO_RESPONSE_CODE : CURLINFO_HTTP_CONNECTCODE, &args->httpCode); // 只有使用了代理的Connect请求才需要特殊处理
+        //curl_easy_getinfo(handle, !isProxyConnect ? CURLINFO_RESPONSE_CODE : CURLINFO_HTTP_CONNECTCODE, &args->httpCode); // 只有使用了代理的Connect请求才需要特殊处理
 
-        double contentLength = 0;
-        curl_easy_getinfo(handle, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &args->contentLength);
+        //double contentLength = 0;
+        //curl_easy_getinfo(handle, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &args->contentLength);
 
         const char* hdr = nullptr;
-        args->hdr = nullptr;
+        //args->hdr = nullptr;
         int hdrLen = 0;
-        curl_easy_getinfo(handle, CURLINFO_EFFECTIVE_URL, &hdr);
+        //curl_easy_getinfo(handle, CURLINFO_EFFECTIVE_URL, &hdr);
         if (hdr)
             hdrLen = strlen(hdr);
 
@@ -691,8 +691,7 @@ static void doRedirect(WebURLLoaderInternal* job, const String& location, MainTa
         job->m_isRedirection = false;
 
         if (job->m_isWkeNetSetDataBeSetted) {
-            if (job->m_customHeaders)
-                curl_slist_free_all(job->m_customHeaders);
+
             job->m_customHeaders = nullptr;
             WebURLLoaderManager::sharedInstance()->cancelWithHookRedirect(job);
             Platform::current()->currentThread()->scheduler()->postLoadingTask(FROM_HERE, new HookAsynTask(WebURLLoaderManager::sharedInstance(), job->m_id, false));

@@ -61,36 +61,36 @@ void calculateWebTimingInformations(ResourceHandleInternal* job)
 // libcurl does not implement its own thread synchronization primitives.
 // these two functions provide mutexes for cookies, and for the global DNS
 // cache.
-WTF::Mutex* sharedResourceMutex(curl_lock_data data)
-{
-    DEFINE_STATIC_LOCAL(Mutex, cookieMutex, ());
-    DEFINE_STATIC_LOCAL(Mutex, dnsMutex, ());
-    DEFINE_STATIC_LOCAL(Mutex, shareMutex, ());
+//WTF::Mutex* sharedResourceMutex(curl_lock_data data)
+//{
+//    DEFINE_STATIC_LOCAL(Mutex, cookieMutex, ());
+//    DEFINE_STATIC_LOCAL(Mutex, dnsMutex, ());
+//    DEFINE_STATIC_LOCAL(Mutex, shareMutex, ());
+//
+//    switch (data) {
+//    case CURL_LOCK_DATA_COOKIE:
+//        return &cookieMutex;
+//    case CURL_LOCK_DATA_DNS:
+//        return &dnsMutex;
+//    case CURL_LOCK_DATA_SHARE:
+//        return &shareMutex;
+//    default:
+//        ASSERT_NOT_REACHED();
+//        return NULL;
+//    }
+//}
 
-    switch (data) {
-    case CURL_LOCK_DATA_COOKIE:
-        return &cookieMutex;
-    case CURL_LOCK_DATA_DNS:
-        return &dnsMutex;
-    case CURL_LOCK_DATA_SHARE:
-        return &shareMutex;
-    default:
-        ASSERT_NOT_REACHED();
-        return NULL;
-    }
-}
-
-void curl_lock_callback(CURL* /* handle */, curl_lock_data data, curl_lock_access /* access */, void* /* userPtr */)
-{
-    if (WTF::Mutex* mutex = sharedResourceMutex(data))
-        mutex->lock();
-}
-
-void curl_unlock_callback(CURL* /* handle */, curl_lock_data data, void* /* userPtr */)
-{
-    if (WTF::Mutex* mutex = sharedResourceMutex(data))
-        mutex->unlock();
-}
+//void curl_lock_callback(CURL* /* handle */, curl_lock_data data, curl_lock_access /* access */, void* /* userPtr */)
+//{
+//    if (WTF::Mutex* mutex = sharedResourceMutex(data))
+//        mutex->lock();
+//}
+//
+//void curl_unlock_callback(CURL* /* handle */, curl_lock_data data, void* /* userPtr */)
+//{
+//    if (WTF::Mutex* mutex = sharedResourceMutex(data))
+//        mutex->unlock();
+//}
 
 bool isAppendableHeader(const String &key) {
     static const char* appendableHeaders[] = {
@@ -233,36 +233,10 @@ private:
             return;
         }
 
-        self->onNetGetFaviconImpl(jobId, webviewId);
+        //self->onNetGetFaviconImpl(jobId, webviewId);
     }
 
-    void onNetGetFaviconImpl(int jobId, int webviewId) {
-        CURL* curl = curl_easy_init();
-        if (!curl) {
-            blink::Platform::current()->mainThread()->postTask(FROM_HERE, WTF::bind(onNetGetFaviconFinish, jobId, webviewId));
-            return;
-        }
 
-        curl_easy_setopt(curl, CURLOPT_URL, m_url.c_str());
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
-        curl_easy_setopt(curl, CURLOPT_TIMEOUT, 5000);
-        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeData);
-
-        Vector<char> buffer;
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
-        int res = curl_easy_perform(curl);
-        if (CURLE_OK != res || 0 == buffer.size()) {
-            curl_easy_cleanup(curl);
-            blink::Platform::current()->mainThread()->postTask(FROM_HERE, WTF::bind(onNetGetFaviconFinish, jobId, webviewId));
-            return;
-        }
-
-        m_buf = wkeCreateMemBuf(m_webView, buffer.data(), buffer.size());
-        curl_easy_cleanup(curl);
-        blink::Platform::current()->mainThread()->postTask(FROM_HERE, WTF::bind(onNetGetFaviconFinish, jobId, webviewId));
-    }
 
     static void getFaviconUrl(int jobId, int webviewId)
     {

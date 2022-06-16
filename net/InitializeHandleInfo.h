@@ -2,9 +2,9 @@
 #ifndef net_InitializeHandleInfo_h
 #define net_InitializeHandleInfo_h
 
-#include "net/ProxyType.h"
+//#include "net/ProxyType.h"
 #include "net/PageNetExtraData.h"
-#include "third_party/libcurl/include/curl/curl.h"
+//#include "third_party/libcurl/include/curl/curl.h"
 #include <string>
 
 namespace net {
@@ -14,10 +14,10 @@ struct SetupHttpMethodInfo;
 struct InitializeHandleInfo {
     std::string url;
     std::string method;
-    curl_slist* headers;
+    //curl_slist* headers;
     std::string proxy;
     std::string wkeNetInterface;
-    ProxyType proxyType;
+    //ProxyType proxyType;
     SetupHttpMethodInfo* methodInfo;
 
     InitializeHandleInfo() {

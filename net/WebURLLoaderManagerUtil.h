@@ -5,7 +5,7 @@
 #include "third_party/WebKit/Source/wtf/RefCountedLeakCounter.h"
 #include "third_party/WebKit/Source/wtf/text/CString.h"
 #include "third_party/WebKit/Source/wtf/text/WTFStringUtil.h"
-#include "third_party/libcurl/include/curl/curl.h"
+//#include "third_party/libcurl/include/curl/curl.h"
 #include "wke/wkedefine.h"
 
 namespace WTF {
@@ -19,7 +19,7 @@ const double pollTimeSeconds = 0.05;
 const int maxRunningJobs = 5;
 
 const bool ignoreSSLErrors = true; //  ("WEBKIT_IGNORE_SSL_ERRORS");
-const int kAllowedProtocols = CURLPROTO_FILE | CURLPROTO_FTP | CURLPROTO_FTPS | CURLPROTO_HTTP | CURLPROTO_HTTPS;
+//const int kAllowedProtocols = CURLPROTO_FILE | CURLPROTO_FTP | CURLPROTO_FTPS | CURLPROTO_HTTP | CURLPROTO_HTTPS;
 
 CString certificatePath();
 
@@ -31,10 +31,10 @@ void calculateWebTimingInformations(ResourceHandleInternal* job);
 // libcurl does not implement its own thread synchronization primitives.
 // these two functions provide mutexes for cookies, and for the global DNS
 // cache.
-WTF::Mutex* sharedResourceMutex(curl_lock_data data);
+//WTF::Mutex* sharedResourceMutex(curl_lock_data data);
 
-void curl_lock_callback(CURL* /* handle */, curl_lock_data data, curl_lock_access /* access */, void* /* userPtr */);
-void curl_unlock_callback(CURL* /* handle */, curl_lock_data data, void* /* userPtr */);
+//void curl_lock_callback(CURL* /* handle */, curl_lock_data data, curl_lock_access /* access */, void* /* userPtr */);
+//void curl_unlock_callback(CURL* /* handle */, curl_lock_data data, void* /* userPtr */);
 
 inline static bool isHttpInfo(int statusCode)
 {

@@ -21,7 +21,7 @@
 #include "third_party/WebKit/Source/wtf/text/WTFStringUtil.h"
 
 #include "net/RequestExtraData.h"
-#include "net/cookies/WebCookieJarCurlImpl.h"
+//#include "net/cookies/WebCookieJarCurlImpl.h"
 #include "net/DataURL.h"
 
 #if (defined ENABLE_WKE) && (ENABLE_WKE == 1)
@@ -191,15 +191,15 @@ WebExternalPopupMenu* WebFrameClientImpl::createExternalPopupMenu(const WebPopup
     return 0;
 }
 
-WebCookieJar* WebFrameClientImpl::cookieJar(WebLocalFrame* frame)
-{
-    net::WebURLLoaderManager* manager = net::WebURLLoaderManager::sharedInstance();
-    if (!manager)
-        return nullptr;
-
-    net::WebCookieJarImpl* result = manager->getShareCookieJar();
-    return result;
-}
+//WebCookieJar* WebFrameClientImpl::cookieJar(WebLocalFrame* frame)
+//{
+//    net::WebURLLoaderManager* manager = net::WebURLLoaderManager::sharedInstance();
+//    if (!manager)
+//        return nullptr;
+//
+//    net::WebCookieJarImpl* result = manager->getShareCookieJar();
+//    return result;
+//}
 
 void WebFrameClientImpl::resetLoadState()
 {

@@ -43,7 +43,7 @@
 #include "third_party/WebKit/Source/wtf/OwnPtr.h"
 #include <windows.h>
 #include <memory>
-#include "third_party/libcurl/include/curl/curl.h"
+//#include "third_party/libcurl/include/curl/curl.h"
 
 #define MINIBLINK_NO_MULTITHREAD_NET 1
 

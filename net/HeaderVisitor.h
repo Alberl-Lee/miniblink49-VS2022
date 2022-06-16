@@ -5,7 +5,7 @@
 #include "third_party/WebKit/public/platform/WebHTTPHeaderVisitor.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/Source/wtf/text/WTFString.h"
-#include "third_party/libcurl/include/curl/curl.h"
+//#include "third_party/libcurl/include/curl/curl.h"
 
 namespace net {
 
@@ -25,7 +25,7 @@ public:
             headerString.append(value);
         }
         CString headerLatin1 = headerString.latin1();
-        *m_headers = curl_slist_append(*m_headers, headerLatin1.data());
+        //*m_headers = curl_slist_append(*m_headers, headerLatin1.data());
     }
 
     curl_slist* headers() { return*m_headers; }

@@ -2,15 +2,15 @@
 #ifndef net_WebURLLoaderManagerSetupInfo_h
 #define net_WebURLLoaderManagerSetupInfo_h
 
-#include "third_party/libcurl/include/curl/curl.h"
+//#include "third_party/libcurl/include/curl/curl.h"
 
 namespace net {
 
 struct FlattenHTTPBodyElement;
 
 struct SetupDataInfo {
-    CURLoption sizeOption;
-    curl_off_t size;
+    //CURLoption sizeOption;
+    //curl_off_t size;
     bool islongLong;
     WTF::Vector<FlattenHTTPBodyElement*> flattenElements;
 

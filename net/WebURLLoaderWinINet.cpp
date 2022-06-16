@@ -29,7 +29,7 @@
 #include "third_party/zlib/zlib.h"
 #include "net/DataURL.h"
 #include "net/BlinkSynchronousLoader.h"
-#include "net/cookies/WebCookieJarCurlImpl.h"
+//#include "net/cookies/WebCookieJarCurlImpl.h"
 
 #if USING_VC6RT == 1
 #define PURE                    = 0

@@ -72,8 +72,8 @@
 #include "net/HeaderVisitor.h"
 #include "net/PageNetExtraData.h"
 #include "net/DiskCache.h"
-#include "net/cookies/WebCookieJarCurlImpl.h"
-#include "net/cookies/CookieJarMgr.h"
+//#include "net/cookies/WebCookieJarCurlImpl.h"
+//#include "net/cookies/CookieJarMgr.h"
 #include "third_party/WebKit/Source/wtf/Threading.h"
 #include "third_party/WebKit/Source/wtf/Vector.h"
 #include "third_party/WebKit/Source/wtf/text/CString.h"
@@ -104,8 +104,8 @@ WebURLLoaderManager::WebURLLoaderManager(const char* cookieJarFullPath)
     content::BlinkPlatformImpl* platform = (content::BlinkPlatformImpl*)Platform::current();
     m_thread = platform->ioThread();
 
-    curl_global_init(CURL_GLOBAL_ALL);
-    m_curlMultiHandle = curl_multi_init(); // 初始化curl批处理句柄
+    //curl_global_init(CURL_GLOBAL_ALL);
+    //m_curlMultiHandle = curl_multi_init(); // 初始化curl批处理句柄
 
     initCookieSession(cookieJarFullPath);
 
@@ -114,8 +114,8 @@ WebURLLoaderManager::WebURLLoaderManager(const char* cookieJarFullPath)
 
 WebURLLoaderManager::~WebURLLoaderManager()
 {
-    curl_multi_cleanup(m_curlMultiHandle);
-    curl_global_cleanup();
+    //curl_multi_cleanup(m_curlMultiHandle);
+    //curl_global_cleanup();
 }
 
 void WebURLLoaderManager::shutdown()
@@ -166,26 +166,26 @@ void WebURLLoaderManager::initCookieSession(const char* cookieJarFullPath)
     // Curl saves both persistent cookies, and session cookies to the cookie file.
     // The session cookies should be deleted before starting a new session.
 
-    //初始化共享curl句柄,用于共享cookies和dns等缓存
-    m_shareCookieJar = CookieJarMgr::getInst()->createOrGet(cookieJarFullPath);
+    ////初始化共享curl句柄,用于共享cookies和dns等缓存
+    //m_shareCookieJar = CookieJarMgr::getInst()->createOrGet(cookieJarFullPath);
 
-    CURL* curl = curl_easy_init();
-    curl_easy_setopt(curl, CURLOPT_SHARE, m_shareCookieJar->getCurlShareHandle());
+    //CURL* curl = curl_easy_init();
+    //curl_easy_setopt(curl, CURLOPT_SHARE, m_shareCookieJar->getCurlShareHandle());
 
-    std::string cookieJarPathString = m_shareCookieJar->getCookieJarFullPath();
-    if (!cookieJarPathString.empty()) {
-        curl_easy_setopt(curl, CURLOPT_COOKIEFILE, cookieJarPathString.c_str());
-        curl_easy_setopt(curl, CURLOPT_COOKIEJAR, cookieJarPathString.c_str());
-    }
+    //std::string cookieJarPathString = m_shareCookieJar->getCookieJarFullPath();
+    //if (!cookieJarPathString.empty()) {
+    //    curl_easy_setopt(curl, CURLOPT_COOKIEFILE, cookieJarPathString.c_str());
+    //    curl_easy_setopt(curl, CURLOPT_COOKIEJAR, cookieJarPathString.c_str());
+    //}
 
-    curl_easy_setopt(curl, CURLOPT_COOKIESESSION, 1);
-    curl_easy_cleanup(curl);
+    //curl_easy_setopt(curl, CURLOPT_COOKIESESSION, 1);
+    //curl_easy_cleanup(curl);
 }
 
-CURLSH* WebURLLoaderManager::getCurlShareHandle() const
-{
-    return m_shareCookieJar->getCurlShareHandle();
-}
+//CURLSH* WebURLLoaderManager::getCurlShareHandle() const
+//{
+//    return m_shareCookieJar->getCurlShareHandle();
+//}
 
 WebCookieJarImpl* WebURLLoaderManager::getShareCookieJar() const
 {
@@ -222,16 +222,16 @@ WebURLLoaderManager* WebURLLoaderManager::sharedInstance()
 
 void WebURLLoaderManager::setCookieJarFullPath(const char* path)
 {
-    if (!m_sharedInstance) {
-        m_sharedInstance = new WebURLLoaderManager(path);
-    } else {
-        WTF::Mutex* mutex = sharedResourceMutex(CURL_LOCK_DATA_COOKIE);
-        WTF::Locker<WTF::Mutex> locker(*mutex);
+    //if (!m_sharedInstance) {
+    //    m_sharedInstance = new WebURLLoaderManager(path);
+    //} else {
+    //    WTF::Mutex* mutex = sharedResourceMutex(CURL_LOCK_DATA_COOKIE);
+    //    WTF::Locker<WTF::Mutex> locker(*mutex);
 
-        WebCookieJarImpl* cookieJar = CookieJarMgr::getInst()->createOrGet(path);
-        m_sharedInstance->m_shareCookieJar = cookieJar;
-    }
-    ASSERT(m_sharedInstance->m_shareCookieJar);
+    //    WebCookieJarImpl* cookieJar = CookieJarMgr::getInst()->createOrGet(path);
+    //    m_sharedInstance->m_shareCookieJar = cookieJar;
+    //}
+    //ASSERT(m_sharedInstance->m_shareCookieJar);
 }
 
 void WebURLLoaderManager::appendDataToBlobCacheWhenDidDownloadData(blink::WebURLLoaderClient* client, blink::WebURLLoader* loader, const String& url, const char* data, int dataLength, int encodedDataLength)
@@ -355,14 +355,14 @@ static void handleExternalProtocol(const KURL& url)
     if (WTF::kNotFound == urlProtocol.find("tencent") && WTF::kNotFound == urlProtocol.find("xunlei"))
         return;
 
-    curl_version_info_data* curlVer = curl_version_info(CURLVERSION_FIRST);
+    //curl_version_info_data* curlVer = curl_version_info(CURLVERSION_FIRST);
 
-    for (int i = 0; curlVer->protocols[i]; ++i) {
-        const char* protocol = curlVer->protocols[i];
-        if (!equalIgnoringCase(urlProtocol, protocol))
-            continue;
-        return;
-    }
+    //for (int i = 0; curlVer->protocols[i]; ++i) {
+    //    const char* protocol = curlVer->protocols[i];
+    //    if (!equalIgnoringCase(urlProtocol, protocol))
+    //        continue;
+    //    return;
+    //}
     ShellExecuteA(NULL, NULL, url.getUTF8String().utf8().data(), NULL, NULL, SW_SHOWNORMAL);
 }
 
@@ -462,9 +462,9 @@ static size_t writeCallbackOnIoThread(void* ptr, size_t size, size_t nmemb, void
     // of html page even if it is a redirect that was handled internally
     // can be observed e.g. on gmail.com
     long httpCode = 0;
-    CURLcode err = curl_easy_getinfo(job->m_handle, !job->m_isProxyConnect ? CURLINFO_RESPONSE_CODE : CURLINFO_HTTP_CONNECTCODE, &httpCode);
-    if (CURLE_OK == err && httpCode >= 300 && httpCode < 400)
-        return totalSize;
+    //CURLcode err = curl_easy_getinfo(job->m_handle, !job->m_isProxyConnect ? CURLINFO_RESPONSE_CODE : CURLINFO_HTTP_CONNECTCODE, &httpCode);
+    //if (CURLE_OK == err && httpCode >= 300 && httpCode < 400)
+    //    return totalSize;
 
     WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kWriteCallback, ptr, size, nmemb, totalSize);
     return totalSize;
@@ -512,21 +512,21 @@ static size_t headerCallbackOnIoThread(char* ptr, size_t size, size_t nmemb, voi
     return totalSize;
 }
 
-static curlioerr ioctlCallbackOnIoThread(CURL* handle, int cmd, void* data)
-{
-    int jobId = (int)data;
-    AutoLockJob autoLockJob(WebURLLoaderManager::sharedInstance(), jobId);
-    WebURLLoaderInternal* job = autoLockJob.lock();
-    if (!job || job->isCancelled())
-        return CURLIOE_UNKNOWNCMD;
-
-    if (cmd == CURLIOCMD_RESTARTREAD) {
-        job->m_formDataStream->reset();
-
-        return CURLIOE_OK;
-    }
-    return CURLIOE_UNKNOWNCMD;
-}
+//static curlioerr ioctlCallbackOnIoThread(CURL* handle, int cmd, void* data)
+//{
+//    int jobId = (int)data;
+//    AutoLockJob autoLockJob(WebURLLoaderManager::sharedInstance(), jobId);
+//    WebURLLoaderInternal* job = autoLockJob.lock();
+//    if (!job || job->isCancelled())
+//        return CURLIOE_UNKNOWNCMD;
+//
+//    if (cmd == CURLIOCMD_RESTARTREAD) {
+//        job->m_formDataStream->reset();
+//
+//        return CURLIOE_OK;
+//    }
+//    return CURLIOE_UNKNOWNCMD;
+//}
 
 size_t readCallbackOnIoThread(void* ptr, size_t size, size_t nmemb, void* data)
 {
@@ -573,7 +573,7 @@ bool WebURLLoaderManager::downloadOnIoThread()
         FD_ZERO(&fdread);
         FD_ZERO(&fdwrite);
         FD_ZERO(&fdexcep);
-        curl_multi_fdset(m_curlMultiHandle, &fdread, &fdwrite, &fdexcep, &maxfd);
+        //curl_multi_fdset(m_curlMultiHandle, &fdread, &fdwrite, &fdexcep, &maxfd);
         // When the 3 file descriptors are empty, winsock will return -1
         // and bail out, stopping the file download. So make sure we
         // have valid file descriptors before calling select.
@@ -589,98 +589,98 @@ bool WebURLLoaderManager::downloadOnIoThread()
     }
 
     int runningHandles = 0;
-    while (curl_multi_perform(m_curlMultiHandle, &runningHandles) == CURLM_CALL_MULTI_PERFORM) {}
-
-    // check the curl messages indicating completed transfers
-    // and free their resources
-    while (true) {
-        int messagesInQueue;
-        CURLMsg* msg = curl_multi_info_read(m_curlMultiHandle, &messagesInQueue);
-        if (!msg)
-            break;
-
-        // find the node which has same job->m_handle as completed transfer
-        CURL* handle = msg->easy_handle;
-        ASSERT(handle);
-        int jobId = 0;
-        CURLcode err = curl_easy_getinfo(handle, CURLINFO_PRIVATE, &jobId);
-        ASSERT_UNUSED(err, CURLE_OK == err);
-        ASSERT(jobId > 0);
-        AutoLockJob autoLockJob(WebURLLoaderManager::sharedInstance(), jobId);
-        WebURLLoaderInternal* job = autoLockJob.lock();
-        if (!job)
-            continue;
-
-        ASSERT(job->m_handle == handle);
-        if (job->isCancelled()) {
-            removeFromCurlOnIoThread(jobId);
-            continue;
-        }
-
-        if (CURLMSG_DONE != msg->msg)
-            continue;
-
-        if (CURLE_OK == msg->data.result) {
-#if ENABLE(WEB_TIMING)
-            calculateWebTimingInformations(job);
-#endif
-            if (!job->responseFired()) {
-                WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kHandleLocalReceiveResponse, nullptr, 0, 0, 0);
-                if (job->isCancelled()) {
-                    removeFromCurlOnIoThread(jobId);
-                    continue;
-                }
-            }
-
-            if (job->m_isHookRequest)
-                WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kHandleHookRequest, nullptr, 0, 0, 0);
-
-            if (job->m_multipartHandle) {
-                WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kContentEnded, nullptr, 0, 0, 0);
-            } else if (job->client() && job->loader()) {
-                WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kDidFinishLoading, nullptr, 0, 0, 0);
-            }
-        } else {
-            char* url = nullptr;
-            curl_easy_getinfo(job->m_handle, CURLINFO_EFFECTIVE_URL, &url);
-            if (!url)
-                url = "url is empty";
-            if (job->client() && job->loader()) {
-                MainTaskArgs* args = WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kDidFail, nullptr, 0, 0, 0);
-                args->resourceError->reason = msg->data.result;
-                args->resourceError->domain = blink::WebString::fromLatin1(url);
-                args->resourceError->unreachableURL = blink::KURL(blink::ParsedURLString, url);
-                args->resourceError->localizedDescription = blink::WebString::fromLatin1(curl_easy_strerror(msg->data.result));
-
-                char* output = (char*)malloc(0x300 + strlen(url));
-                sprintf(output, "kDidFail on io Thread:%d, %s\n", msg->data.result, url);          
-                OutputDebugStringA(output);
-                free(output);
-            }
-        }
-        
-        removeFromCurlOnIoThread(jobId);
-    }
+//    while (curl_multi_perform(m_curlMultiHandle, &runningHandles) == CURLM_CALL_MULTI_PERFORM) {}
+//
+//    // check the curl messages indicating completed transfers
+//    // and free their resources
+//    while (true) {
+//        int messagesInQueue;
+//        CURLMsg* msg = curl_multi_info_read(m_curlMultiHandle, &messagesInQueue);
+//        if (!msg)
+//            break;
+//
+//        // find the node which has same job->m_handle as completed transfer
+//        CURL* handle = msg->easy_handle;
+//        ASSERT(handle);
+//        int jobId = 0;
+//        CURLcode err = curl_easy_getinfo(handle, CURLINFO_PRIVATE, &jobId);
+//        ASSERT_UNUSED(err, CURLE_OK == err);
+//        ASSERT(jobId > 0);
+//        AutoLockJob autoLockJob(WebURLLoaderManager::sharedInstance(), jobId);
+//        WebURLLoaderInternal* job = autoLockJob.lock();
+//        if (!job)
+//            continue;
+//
+//        ASSERT(job->m_handle == handle);
+//        if (job->isCancelled()) {
+//            removeFromCurlOnIoThread(jobId);
+//            continue;
+//        }
+//
+//        if (CURLMSG_DONE != msg->msg)
+//            continue;
+//
+//        if (CURLE_OK == msg->data.result) {
+//#if ENABLE(WEB_TIMING)
+//            calculateWebTimingInformations(job);
+//#endif
+//            if (!job->responseFired()) {
+//                WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kHandleLocalReceiveResponse, nullptr, 0, 0, 0);
+//                if (job->isCancelled()) {
+//                    removeFromCurlOnIoThread(jobId);
+//                    continue;
+//                }
+//            }
+//
+//            if (job->m_isHookRequest)
+//                WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kHandleHookRequest, nullptr, 0, 0, 0);
+//
+//            if (job->m_multipartHandle) {
+//                WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kContentEnded, nullptr, 0, 0, 0);
+//            } else if (job->client() && job->loader()) {
+//                WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kDidFinishLoading, nullptr, 0, 0, 0);
+//            }
+//        } else {
+//            char* url = nullptr;
+//            curl_easy_getinfo(job->m_handle, CURLINFO_EFFECTIVE_URL, &url);
+//            if (!url)
+//                url = "url is empty";
+//            if (job->client() && job->loader()) {
+//                MainTaskArgs* args = WebURLLoaderManagerMainTask::pushTask(jobId, WebURLLoaderManagerMainTask::TaskType::kDidFail, nullptr, 0, 0, 0);
+//                args->resourceError->reason = msg->data.result;
+//                args->resourceError->domain = blink::WebString::fromLatin1(url);
+//                args->resourceError->unreachableURL = blink::KURL(blink::ParsedURLString, url);
+//                args->resourceError->localizedDescription = blink::WebString::fromLatin1(curl_easy_strerror(msg->data.result));
+//
+//                char* output = (char*)malloc(0x300 + strlen(url));
+//                sprintf(output, "kDidFail on io Thread:%d, %s\n", msg->data.result, url);          
+//                OutputDebugStringA(output);
+//                free(output);
+//            }
+//        }
+//        
+//        removeFromCurlOnIoThread(jobId);
+//    }
 
     return (runningHandles > 0); // 如果还有请求未处理则返回true,下个timer继续处理
 }
 
-void WebURLLoaderManager::setProxyInfo(const String& host, unsigned long port, ProxyType type, const String& username, const String& password)
-{
-    m_proxyType = type;
-
-    if (!host.length()) {
-        m_proxy = emptyString();
-    } else {
-        String userPass;
-        if (username.length() || password.length())
-            userPass = username + ":" + password + "@";
-
-        m_proxy = userPass + host + ":" + String::number(port);
-        if (!m_proxy.startsWith("https://") && !m_proxy.startsWith("http://"))
-            m_proxy.insert("http://", 0);
-    }
-}
+//void WebURLLoaderManager::setProxyInfo(const String& host, unsigned long port, ProxyType type, const String& username, const String& password)
+//{
+//    m_proxyType = type;
+//
+//    if (!host.length()) {
+//        m_proxy = emptyString();
+//    } else {
+//        String userPass;
+//        if (username.length() || password.length())
+//            userPass = username + ":" + password + "@";
+//
+//        m_proxy = userPass + host + ":" + String::number(port);
+//        if (!m_proxy.startsWith("https://") && !m_proxy.startsWith("http://"))
+//            m_proxy.insert("http://", 0);
+//    }
+//}
 
 void WebURLLoaderManager::removeFromCurlOnIoThread(int jobId)
 {
@@ -702,10 +702,10 @@ void WebURLLoaderManager::removeFromCurlOnIoThread(int jobId)
             ASSERT(job->m_handle);
             WebURLLoaderManagerMainTask* task = WebURLLoaderManagerMainTask::createTask(jobId, WebURLLoaderManagerMainTask::TaskType::kRemoveFromCurl, nullptr, 0, 0, 0);
                         
-            if (job->m_handle) {
-                curl_multi_remove_handle(m_curlMultiHandle, job->m_handle);
-                curl_easy_cleanup(job->m_handle);
-            }
+            //if (job->m_handle) {
+            //    curl_multi_remove_handle(m_curlMultiHandle, job->m_handle);
+            //    curl_easy_cleanup(job->m_handle);
+            //}
             job->m_handle = nullptr;
             Platform::current()->mainThread()->scheduler()->postLoadingTask(FROM_HERE, task); // postLoadingTask
         }
@@ -727,71 +727,22 @@ static inline size_t getFormElementsCount(WebURLLoaderInternal* job)
 
 static void setupFormDataOnIoThread(WebURLLoaderInternal* job, SetupDataInfo* info)
 {
-    if (info) {
-        if (info->islongLong)
-            curl_easy_setopt(job->m_handle, info->sizeOption, (long long)info->size);
-        else
-            curl_easy_setopt(job->m_handle, info->sizeOption, (int)info->size);
-    }
+    //if (info) {
+    //    if (info->islongLong)
+    //        curl_easy_setopt(job->m_handle, info->sizeOption, (long long)info->size);
+    //    else
+    //        curl_easy_setopt(job->m_handle, info->sizeOption, (int)info->size);
+    //}
 
-    ASSERT(!job->m_formDataStream);
-    job->m_formDataStream = new FlattenHTTPBodyElementStream(info->flattenElements);
-    curl_easy_setopt(job->m_handle, CURLOPT_READFUNCTION, readCallbackOnIoThread);
-    curl_easy_setopt(job->m_handle, CURLOPT_READDATA, job->m_id);
+    //ASSERT(!job->m_formDataStream);
+    //job->m_formDataStream = new FlattenHTTPBodyElementStream(info->flattenElements);
+    //curl_easy_setopt(job->m_handle, CURLOPT_READFUNCTION, readCallbackOnIoThread);
+    //curl_easy_setopt(job->m_handle, CURLOPT_READDATA, job->m_id);
 
-    curl_easy_setopt(job->m_handle, CURLOPT_IOCTLFUNCTION, ioctlCallbackOnIoThread);
-    curl_easy_setopt(job->m_handle, CURLOPT_IOCTLDATA, job->m_id);
+    //curl_easy_setopt(job->m_handle, CURLOPT_IOCTLFUNCTION, ioctlCallbackOnIoThread);
+    //curl_easy_setopt(job->m_handle, CURLOPT_IOCTLDATA, job->m_id);
 }
 
-static void flattenHTTPBodyBlobElement(const WebString& blobUUID, curl_off_t* size, WTF::Vector<FlattenHTTPBodyElement*>* flattenElements)
-{
-    FlattenHTTPBodyElement* flattenElement = nullptr;
-    WebBlobRegistryImpl* blobReg = (WebBlobRegistryImpl*)blink::Platform::current()->blobRegistry();
-    net::BlobDataWrap* blobData = blobReg->getBlobDataFromUUID(blobUUID);
-    if (!blobData)
-        return;
-
-    long long fileSizeResult = 0;
-    const Vector<blink::WebBlobData::Item*>& items = blobData->items();
-    for (size_t i = 0; i < items.size(); ++i) {
-        blink::WebBlobData::Item* item = items[i];
-        if (blink::WebBlobData::Item::TypeData == item->type) {
-            flattenElement = new FlattenHTTPBodyElement();
-            flattenElement->type = WebHTTPBody::Element::TypeData;
-            flattenElement->data.append(item->data.data(), item->data.size());
-            flattenElements->append(flattenElement);
-            *size += item->data.size();
-        } else if (blink::WebBlobData::Item::TypeFile == item->type) {
-            if (getFileSize((String)item->filePath, fileSizeResult)) {
-                *size += fileSizeResult;
-
-                flattenElement = new FlattenHTTPBodyElement();
-                flattenElement->type = WebHTTPBody::Element::TypeFile;
-                Vector<UChar> filePath = WTF::ensureUTF16UChar(item->filePath, true);
-                flattenElement->filePath = filePath.data();
-                flattenElements->append(flattenElement);
-            }
-        } else if (blink::WebBlobData::Item::TypeFileSystemURL == item->type) {
-            blink::KURL fileSystemURL = item->fileSystemURL;
-            String fileSystemPath(fileSystemURL.getUTF8String());
-            if (fileSystemPath.startsWith("file:///"))
-                fileSystemPath.remove(0, sizeof("file:///") - 1);
-            fileSystemPath.replace("/", "\\");
-            if (!getFileSize(fileSystemPath, fileSizeResult))
-                continue;
-
-            *size += fileSizeResult;
-
-            flattenElement = new FlattenHTTPBodyElement();
-            flattenElement->type = WebHTTPBody::Element::TypeFile;
-            Vector<UChar> filePath = WTF::ensureUTF16UChar(fileSystemPath, true);
-            flattenElement->filePath = filePath.data();
-            flattenElements->append(flattenElement);
-        } else if (blink::WebBlobData::Item::TypeBlob == item->type) {
-            flattenHTTPBodyBlobElement(item->blobUUID, size, flattenElements);
-        }
-    }
-}
 
 static void dispatchPostBodyToWke(WebURLLoaderInternal* job, WTF::Vector<FlattenHTTPBodyElement*>* flattenElements)
 {
@@ -816,85 +767,14 @@ static void dispatchPostBodyToWke(WebURLLoaderInternal* job, WTF::Vector<Flatten
 //         wkeNetFreePostBodyElements(tempInfo->postBody);
 }
 
-static SetupDataInfo* setupFormDataOnMainThread(WebURLLoaderInternal* job, CURLoption sizeOption, struct curl_slist** headers)
-{
-    WebHTTPBody httpBody = job->firstRequest()->httpBody();
-
-    // The size of a curl_off_t could be different in WebKit and in cURL depending on
-    // compilation flags of both.
-    static int expectedSizeOfCurlOffT = 0;
-    if (!expectedSizeOfCurlOffT) {
-        curl_version_info_data *infoData = curl_version_info(CURLVERSION_NOW);
-        if (infoData->features & CURL_VERSION_LARGEFILE)
-            expectedSizeOfCurlOffT = sizeof(long long);
-        else
-            expectedSizeOfCurlOffT = sizeof(int);
-    }
-    
-    static const long long maxCurlOffT = (1LL << (expectedSizeOfCurlOffT * 8 - 1)) - 1;
-    // Obtain the total size of the form data
-    curl_off_t size = 0;
-    bool chunkedTransfer = false;
-    SetupDataInfo* result = new SetupDataInfo();
-    
-    long long fileSizeResult = 0;
-    for (size_t i = 0; i < httpBody.elementCount(); ++i) {
-        blink::WebHTTPBody::Element element;
-        if (!httpBody.elementAt(i, element))
-            continue;
-
-        FlattenHTTPBodyElement* flattenElement = nullptr;
-        if (blink::WebHTTPBody::Element::TypeFile == element.type) {
-            if (getFileSize((String)(element.filePath), fileSizeResult)) {
-                if (fileSizeResult > maxCurlOffT) {
-                    // File size is too big for specifying it to cURL
-                    chunkedTransfer = true;
-                    break;
-                }
-                size += fileSizeResult;
-            } else {
-                chunkedTransfer = true;
-                break;
-            }
-
-            flattenElement = new FlattenHTTPBodyElement();
-            flattenElement->type = blink::WebHTTPBody::Element::TypeFile;
-            Vector<UChar> filePath = WTF::ensureUTF16UChar(element.filePath, true);
-            flattenElement->filePath = filePath.data();
-            result->flattenElements.append(flattenElement);
-        } else if (WebHTTPBody::Element::TypeData == element.type) {
-            size += element.data.size();
-
-            flattenElement = new FlattenHTTPBodyElement();
-            flattenElement->type = blink::WebHTTPBody::Element::TypeData;
-            flattenElement->data.append(element.data.data(), element.data.size());
-            result->flattenElements.append(flattenElement);
-        } else if (WebHTTPBody::Element::TypeBlob == element.type) {
-            flattenHTTPBodyBlobElement(element.blobUUID, &size, &result->flattenElements);
-        }
-    }
-
-    // dispatchPostBodyToWke(job, &result->flattenElements);
-
-    // cURL guesses that we want chunked encoding as long as we specify the header
-    if (chunkedTransfer)
-        *headers = curl_slist_append(*headers, "Transfer-Encoding: chunked");
-    else {
-        result->sizeOption = sizeOption;
-        result->size = size;
-        result->islongLong = (sizeof(long long) == expectedSizeOfCurlOffT);
-    }
-
-    return result;
-}
 
 static void setupPutOnIoThread(WebURLLoaderInternal* job, SetupPutInfo* info)
 {
     if (!info)
         return;
 
-    curl_easy_setopt(job->m_handle, CURLOPT_UPLOAD, TRUE); // CURLOPT_PUT
-    curl_easy_setopt(job->m_handle, CURLOPT_INFILESIZE, 0);
+    //curl_easy_setopt(job->m_handle, CURLOPT_UPLOAD, TRUE); // CURLOPT_PUT
+    //curl_easy_setopt(job->m_handle, CURLOPT_INFILESIZE, 0);
 
     if (info->data)
         setupFormDataOnIoThread(job, info->data);
@@ -902,36 +782,36 @@ static void setupPutOnIoThread(WebURLLoaderInternal* job, SetupPutInfo* info)
 
 static SetupPutInfo* setupPutOnMainThread(WebURLLoaderInternal* job, struct curl_slist** headers)
 {
-    *headers = curl_slist_append(*headers, "Expect:"); // Disable the Expect: 100 continue header
+    //*headers = curl_slist_append(*headers, "Expect:"); // Disable the Expect: 100 continue header
 
     size_t numElements = getFormElementsCount(job);
     if (!numElements)
         return nullptr;
 
     SetupPutInfo* result = new SetupPutInfo();
-    result->data = setupFormDataOnMainThread(job, CURLOPT_INFILESIZE_LARGE, headers);
+    //result->data = setupFormDataOnMainThread(job, CURLOPT_INFILESIZE_LARGE, headers);
     return result;
 }
 
 static void setupPostOnIoThread(WebURLLoaderInternal* job, SetupPostInfo* info)
 {
-    curl_easy_setopt(job->m_handle, CURLOPT_POST, true);
+    //curl_easy_setopt(job->m_handle, CURLOPT_POST, true);
 
-    if (!info) {
-        curl_easy_setopt(job->m_handle, CURLOPT_POSTFIELDSIZE, 0);
-        return;
-    }
+    //if (!info) {
+    //    curl_easy_setopt(job->m_handle, CURLOPT_POSTFIELDSIZE, 0);
+    //    return;
+    //}
 
-    if (info->data && 1 == info->data->flattenElements.size()) {
-        FlattenHTTPBodyElement* element = info->data->flattenElements[0];
-        if (WebHTTPBody::Element::TypeData == element->type || WebHTTPBody::Element::TypeBlob == element->type) {
-            curl_easy_setopt(job->m_handle, CURLOPT_POSTFIELDSIZE, element->data.size());
-            curl_easy_setopt(job->m_handle, CURLOPT_COPYPOSTFIELDS, element->data.data());
+    //if (info->data && 1 == info->data->flattenElements.size()) {
+    //    FlattenHTTPBodyElement* element = info->data->flattenElements[0];
+    //    if (WebHTTPBody::Element::TypeData == element->type || WebHTTPBody::Element::TypeBlob == element->type) {
+    //        curl_easy_setopt(job->m_handle, CURLOPT_POSTFIELDSIZE, element->data.size());
+    //        curl_easy_setopt(job->m_handle, CURLOPT_COPYPOSTFIELDS, element->data.data());
 
-            delete element;
-            return;
-        }
-    }
+    //        delete element;
+    //        return;
+    //    }
+    //}
 
     if (info->data)
         setupFormDataOnIoThread(job, info->data);
@@ -946,7 +826,7 @@ static SetupPostInfo* setupPostOnMainThread(WebURLLoaderInternal* job, struct cu
         return nullptr;
 
     SetupPostInfo* result = new SetupPostInfo();
-    result->data = setupFormDataOnMainThread(job, CURLOPT_POSTFIELDSIZE_LARGE, headers);
+    //result->data = setupFormDataOnMainThread(job, CURLOPT_POSTFIELDSIZE_LARGE, headers);
     return result;
 }
 
@@ -1271,8 +1151,8 @@ void WebURLLoaderManager::dispatchSynchronousJob(WebURLLoaderInternal* job)
     m_thread->postTask(FROM_HERE, WTF::bind(&WebURLLoaderManager::initializeHandleOnIoThread, this, jobId, info));
 
     int isCallFinish = 0;
-    CURLcode ret = CURLE_OK;
-    m_thread->postTask(FROM_HERE, WTF::bind(&WebURLLoaderManager::dispatchSynchronousJobOnIoThread, this, job, info, &ret, &isCallFinish));
+    //CURLcode ret = CURLE_OK;
+    //m_thread->postTask(FROM_HERE, WTF::bind(&WebURLLoaderManager::dispatchSynchronousJobOnIoThread, this, job, info, &ret, &isCallFinish));
     while (!isCallFinish) { ::Sleep(50); }
 
     for (size_t i = 0; i < job->m_syncTasks.size(); ++i) {
@@ -1281,15 +1161,7 @@ void WebURLLoaderManager::dispatchSynchronousJob(WebURLLoaderInternal* job)
         delete task;
     }
 
-    if (ret != CURLE_OK) {
-        if (job->client() && job->loader()) {
-            WebURLError error;
-            error.domain = WebString(String(job->m_url));
-            error.reason = ret;
-            error.localizedDescription = WebString(String(curl_easy_strerror(ret)));
-            WebURLLoaderManager::sharedInstance()->handleDidFail(job, error);
-        }
-    } else {
+    
         if (job->client() && job->loader())
             handleDidReceiveResponse(job);
 
@@ -1304,20 +1176,12 @@ void WebURLLoaderManager::dispatchSynchronousJob(WebURLLoaderInternal* job)
         if (job->m_hookBufForEndHook)
             didReceiveDataOrDownload(job, static_cast<char*>(job->m_hookBufForEndHook->data()), hookLength, 0);
         handleDidFinishLoading(job, 0, 0);
-    }
+    
 
     removeLiveJobs(jobId);
     delete job;
 }
 
-void WebURLLoaderManager::dispatchSynchronousJobOnIoThread(WebURLLoaderInternal* job, InitializeHandleInfo* info, CURLcode* ret, int* isCallFinish)
-{
-    // curl_easy_perform blocks until the transfert is finished.
-    *ret = curl_easy_perform(job->m_handle);
-    curl_easy_cleanup(job->m_handle);
-
-    *isCallFinish = true;
-}
 
 #if (defined ENABLE_WKE) && (ENABLE_WKE == 1)
 
@@ -1365,7 +1229,7 @@ void WebURLLoaderManager::applyAuthenticationToRequest(WebURLLoaderInternal* han
 
     // curl CURLOPT_USERPWD expects username:password
     String userpass = user + ":" + password;
-    curl_easy_setopt(job->m_handle, CURLOPT_USERPWD, userpass.utf8().data());
+    //curl_easy_setopt(job->m_handle, CURLOPT_USERPWD, userpass.utf8().data());
     //curl_easy_setopt(job->m_handle, CURLOPT_USERPWD, ":");
 }
 
@@ -1419,13 +1283,13 @@ InitializeHandleInfo* WebURLLoaderManager::preInitializeHandleOnMainThread(WebUR
         info->methodInfo = new SetupHttpMethodInfo();
         info->methodInfo->put = setupPutOnMainThread(job, &headers);
     }
-    info->headers = headers;
+    //info->headers = headers;
 
     // Set proxy options if we have them.
-    if (m_proxy.length()) {
-        info->proxy = m_proxy.utf8().data();
-        info->proxyType = m_proxyType;
-    }
+    //if (m_proxy.length()) {
+    //    info->proxy = m_proxy.utf8().data();
+    //    info->proxyType = m_proxyType;
+    //}
 
 #if (defined ENABLE_WKE) && (ENABLE_WKE == 1)
     RequestExtraData* requestExtraData = reinterpret_cast<RequestExtraData*>(job->firstRequest()->extraData());
@@ -1436,11 +1300,11 @@ InitializeHandleInfo* WebURLLoaderManager::preInitializeHandleOnMainThread(WebUR
     if (!page->wkeWebView())
         return info;
 
-    String wkeProxy = page->wkeWebView()->getProxy();
-    if (0 != wkeProxy.length()) {
-        info->proxy = wkeProxy.utf8().data();
-        info->proxyType = page->wkeWebView()->getProxyType();
-    }
+    //String wkeProxy = page->wkeWebView()->getProxy();
+    //if (0 != wkeProxy.length()) {
+    //    info->proxy = wkeProxy.utf8().data();
+    //    info->proxyType = page->wkeWebView()->getProxyType();
+    //}
 
     String wkeNetInterface = page->wkeWebView()->getNetInterface();
     if (0 != wkeNetInterface.length()) {
@@ -1457,96 +1321,9 @@ void WebURLLoaderManager::initializeHandleOnIoThread(int jobId, InitializeHandle
     WebURLLoaderInternal* job = autoLockJob.lock();
     if (!job)
         return;
-    job->m_handle = curl_easy_init();
-
-    if (job->m_defersLoading) {
-        CURLcode error = curl_easy_pause(job->m_handle, CURLPAUSE_ALL);
-        // If we did not pause the handle, we would ASSERT in the
-        // header callback. So just assert here.
-        ASSERT_UNUSED(error, error == CURLE_OK);
-    }
-#ifndef NDEBUG
-    if (getenv("DEBUG_CURL"))
-        curl_easy_setopt(job->m_handle, CURLOPT_VERBOSE, 1);
-#endif
-    curl_easy_setopt(job->m_handle, CURLOPT_TIMEOUT, 30000);
-    curl_easy_setopt(job->m_handle, CURLOPT_SSL_VERIFYPEER, false); // ignoreSSLErrors
-    curl_easy_setopt(job->m_handle, CURLOPT_SSL_VERIFYHOST, FALSE);
-    curl_easy_setopt(job->m_handle, CURLOPT_PRIVATE, jobId);
-    curl_easy_setopt(job->m_handle, CURLOPT_ERRORBUFFER, m_curlErrorBuffer);
-    curl_easy_setopt(job->m_handle, CURLOPT_WRITEFUNCTION, writeCallbackOnIoThread);
-    curl_easy_setopt(job->m_handle, CURLOPT_WRITEDATA, jobId);
-    curl_easy_setopt(job->m_handle, CURLOPT_HEADERFUNCTION, headerCallbackOnIoThread);
-    curl_easy_setopt(job->m_handle, CURLOPT_WRITEHEADER, jobId);
-    curl_easy_setopt(job->m_handle, CURLOPT_AUTOREFERER, 1);
-    curl_easy_setopt(job->m_handle, CURLOPT_FOLLOWLOCATION, 1);
-    curl_easy_setopt(job->m_handle, CURLOPT_MAXREDIRS, 10);
-    curl_easy_setopt(job->m_handle, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-    curl_easy_setopt(job->m_handle, CURLOPT_SHARE, m_shareCookieJar->getCurlShareHandle());
-    curl_easy_setopt(job->m_handle, CURLOPT_DNS_CACHE_TIMEOUT, 60 * 5); // 5 minutes
-    curl_easy_setopt(job->m_handle, CURLOPT_PROTOCOLS, kAllowedProtocols);
-    curl_easy_setopt(job->m_handle, CURLOPT_REDIR_PROTOCOLS, kAllowedProtocols);
-
-    //curl_easy_setopt(job->m_handle, CURLOPT_HTTPPROXYTUNNEL, true); // TODO
-
-    if (!m_certificatePath.isNull())
-        curl_easy_setopt(job->m_handle, CURLOPT_CAINFO, m_certificatePath.data());
-    
-    curl_easy_setopt(job->m_handle, CURLOPT_ENCODING, ""); // enable gzip and deflate through Accept-Encoding:
-
-#ifndef MINIBLINK_NO_MULTITHREAD_NET
-    ASSERT(!job->m_url); // url must remain valid through the request
-    job->m_url = fastStrDup(info->url.c_str()); // url is in ASCII so latin1() will only convert it to char* without character translation.
-#endif
-
-    String urlString = job->m_url;
-    curl_easy_setopt(job->m_handle, CURLOPT_URL, job->m_url);
-
-    WTF::Mutex* mutex = sharedResourceMutex(CURL_LOCK_DATA_COOKIE);
-    WTF::Locker<WTF::Mutex> locker(*mutex);
-
-    std::string cookieJarFullPath;
-    cookieJarFullPath = m_shareCookieJar->getCookieJarFullPath();
-    
-    if (!cookieJarFullPath.empty()) {
-        curl_easy_setopt(job->m_handle, CURLOPT_COOKIEJAR, cookieJarFullPath.c_str());
-        curl_easy_setopt(job->m_handle, CURLOPT_COOKIEFILE, cookieJarFullPath.c_str());
-    }
-
-    if ("GET" == info->method) {
-        curl_easy_setopt(job->m_handle, CURLOPT_HTTPGET, TRUE);
-    } else if ("POST" == info->method) {
-        setupPostOnIoThread(job, info->methodInfo->post);
-    } else if ("PUT" == info->method ) {
-        setupPutOnIoThread(job, info->methodInfo->put);
-    } else if ("HEAD" == info->method)
-        curl_easy_setopt(job->m_handle, CURLOPT_NOBODY, TRUE);
-    else {
-        curl_easy_setopt(job->m_handle, CURLOPT_CUSTOMREQUEST, info->method.c_str());
-        setupPutOnIoThread(job, info->methodInfo->put);
-    }
-
-    if (info->headers) {
-        curl_easy_setopt(job->m_handle, CURLOPT_HTTPHEADER, info->headers);
-        job->m_customHeaders = info->headers;
-        RELEASE_ASSERT(!job->m_asynWkeNetSetData);
-    }
 
     // curl_easy_setopt(job->m_handle, CURLOPT_USERPWD, ":");
     applyAuthenticationToRequest(job);
-
-#if (defined ENABLE_WKE) && (ENABLE_WKE == 1)
-    if (info->proxy.size()) {
-        job->m_isProxy = true;
-        if(info->url.find("https") == 0)
-            job->m_isProxyConnect = true;
-        curl_easy_setopt(job->m_handle, CURLOPT_PROXY, info->proxy.c_str());
-        curl_easy_setopt(job->m_handle, CURLOPT_PROXYTYPE, info->proxyType);
-    }  
-
-    if (info->wkeNetInterface.size())
-        curl_easy_setopt(job->m_handle, CURLOPT_INTERFACE, info->wkeNetInterface.c_str());
-#endif
 
     job->m_initializeHandleInfo = nullptr;
     delete info;
@@ -1619,24 +1396,7 @@ void WebURLLoaderManager::startOnIoThread(int jobId)
     //Platform::current()->mainThread()->postDelayedTask(FROM_HERE, WTF::bind(&WebURLLoaderManager::timeoutOnMainThread, this, jobId), 5000);
 
     m_runningJobs++;
-    CURLMcode ret = curl_multi_add_handle(m_curlMultiHandle, job->m_handle);
-    // don't call perform, because events must be async
-    // timeout will occur and do curl_multi_perform
-    if (ret && ret != CURLM_CALL_MULTI_PERFORM) {
-#ifndef NDEBUG
-        //         WTF::String outstr = String::format("Error %job starting job %s\n", ret, encodeWithURLEscapeSequences(job->firstRequest()->url().string()).latin1().data());
-        //         OutputDebugStringW(outstr.charactersWithNullTermination().data());
-#endif
-        WTF::Locker<WTF::Mutex> locker(job->m_destroingMutex);
-        job->m_cancelledReason = kNormalCancelled;
-        removeFromCurlOnIoThread(jobId);
 
-        curl_easy_setopt(job->m_handle, CURLOPT_PRIVATE, nullptr);
-        curl_easy_setopt(job->m_handle, CURLOPT_ERRORBUFFER, nullptr);
-        curl_easy_setopt(job->m_handle, CURLOPT_WRITEDATA, nullptr);
-        curl_easy_setopt(job->m_handle, CURLOPT_WRITEHEADER, nullptr);
-        curl_easy_setopt(job->m_handle, CURLOPT_SHARE, nullptr);
-    }
 }
 
 InitializeHandleInfo::~InitializeHandleInfo() {
@@ -1725,8 +1485,8 @@ WebURLLoaderInternal::~WebURLLoaderInternal()
     delete m_firstRequest;
     fastFree(m_url);
 
-    if (m_customHeaders)
-        curl_slist_free_all(m_customHeaders);
+    //if (m_customHeaders)
+    //    curl_slist_free_all(m_customHeaders);
 
     if (m_bodyStreamWriter) {
         delete m_bodyStreamWriter;

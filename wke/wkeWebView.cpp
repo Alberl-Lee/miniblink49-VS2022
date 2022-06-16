@@ -20,8 +20,8 @@
 #include "third_party/WebKit/Source/bindings/core/v8/ExceptionState.h"
 #include "third_party/WebKit/Source/wtf/text/WTFStringUtil.h"
 #include "net/ActivatingObjCheck.h"
-#include "net/WebURLLoaderManagerUtil.h"
-#include "net/cookies/WebCookieJarCurlImpl.h"
+//#include "net/WebURLLoaderManagerUtil.h"
+//#include "net/cookies/WebCookieJarCurlImpl.h"
 
 #undef  PURE
 #define PURE = 0;
@@ -649,13 +649,13 @@ const utf8* CWebView::cookie()
     blink::WebDocument webDocument = m_webPage->mainFrame()->document();
     if (webDocument.isNull())
         return "";
+    return "";
+    //net::WebCookieJarImpl* cookieJar = getCookieJar();
+    //if (!cookieJar)
+    //    return "";
 
-    net::WebCookieJarImpl* cookieJar = getCookieJar();
-    if (!cookieJar)
-        return "";
-
-    const blink::Document* doc = webDocument.constUnwrap<blink::Document>();
-    m_cookie = cookieJar->getCookiesForSession(KURL(), doc->cookieURL(), true);
+    //const blink::Document* doc = webDocument.constUnwrap<blink::Document>();
+  //  m_cookie = cookieJar->getCookiesForSession(KURL(), doc->cookieURL(), true);
 
     return m_cookie.string();
 }
@@ -1378,20 +1378,20 @@ void CWebView::setNetInterface(const char* netInterface)
     m_netInterface = netInterface;
 }
 
-void CWebView::setProxyInfo(const String& host, unsigned long port, net::ProxyType type, const String& username, const String& password)
-{
-    m_proxyType = type;
-
-    if (!host.length()) {
-        m_proxy = emptyString();
-    } else {
-        String userPass;
-        if (username.length() || password.length())
-            userPass = username + ":" + password + "@";
-
-        m_proxy = String("http://") + userPass + host + ":" + String::number(port);
-    }
-}
+//void CWebView::setProxyInfo(const String& host, unsigned long port, net::ProxyType type, const String& username, const String& password)
+//{
+//    m_proxyType = type;
+//
+//    if (!host.length()) {
+//        m_proxy = emptyString();
+//    } else {
+//        String userPass;
+//        if (username.length() || password.length())
+//            userPass = username + ":" + password + "@";
+//
+//        m_proxy = String("http://") + userPass + host + ":" + String::number(port);
+//    }
+//}
 
 class ShowDevToolsTaskObserver : public blink::WebThread::TaskObserver {
 public:
@@ -1449,31 +1449,31 @@ void CWebView::showDevTools(const utf8* url, wkeOnShowDevtoolsCallback callback,
     blink::Platform::current()->currentThread()->addTaskObserver(new ShowDevToolsTaskObserver(this, url, callback, param));
 }
 
-net::WebCookieJarImpl* CWebView::getCookieJar()
-{
-    net::WebURLLoaderManager* manager = net::WebURLLoaderManager::sharedInstance();
-    if (!manager)
-        return nullptr;
+//net::WebCookieJarImpl* CWebView::getCookieJar()
+//{
+//    net::WebURLLoaderManager* manager = net::WebURLLoaderManager::sharedInstance();
+//    if (!manager)
+//        return nullptr;
+//
+//    return manager->getShareCookieJar();
+//}
+//
+//CURLSH* CWebView::getCurlShareHandle()
+//{
+//    CURLSH* curlsh = nullptr;
+//    curlsh = net::WebURLLoaderManager::sharedInstance()->getCurlShareHandle();
+//    return curlsh;
+//}
 
-    return manager->getShareCookieJar();
-}
-
-CURLSH* CWebView::getCurlShareHandle()
-{
-    CURLSH* curlsh = nullptr;
-    curlsh = net::WebURLLoaderManager::sharedInstance()->getCurlShareHandle();
-    return curlsh;
-}
-
-std::string CWebView::getCookieJarPath()
-{
-    net::WebURLLoaderManager* manager = net::WebURLLoaderManager::sharedInstance();
-    if (!manager)
-        return "";
-
-    std::string cookiesData = manager->getShareCookieJar()->getCookieJarFullPath();
-    return cookiesData;
-}
+//std::string CWebView::getCookieJarPath()
+//{
+//    net::WebURLLoaderManager* manager = net::WebURLLoaderManager::sharedInstance();
+//    if (!manager)
+//        return "";
+//
+//    std::string cookiesData = manager->getShareCookieJar()->getCookieJarFullPath();
+//    return cookiesData;
+//}
 
 } // namespace wke
 

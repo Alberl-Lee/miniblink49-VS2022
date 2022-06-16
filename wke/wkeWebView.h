@@ -8,9 +8,9 @@
 #include "wke/wkeString.h"
 #include "wke/wkeUtil.h"
 #include "third_party/WebKit/Source/platform/geometry/IntRect.h"
-#include "net/WebURLLoaderManager.h"
 #include <map>
 #include <set>
+//#include <net/ProxyType.h>
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -310,17 +310,17 @@ public:
     void setNetInterface(const char* netInterface);
     String getNetInterface() const { return m_netInterface; }
 
-    void setProxyInfo(const String& host, unsigned long port, net::ProxyType type, const String& username, const String& password);
-    String getProxy() const { return m_proxy; }
-    net::ProxyType getProxyType() const { return m_proxyType; }
+//    void setProxyInfo(const String& host, unsigned long port, net::ProxyType type, const String& username, const String& password);
+//    String getProxy() const { return m_proxy; }
+//    net::ProxyType getProxyType() const { return m_proxyType; }
 
     void showDevTools(const utf8* url, wkeOnShowDevtoolsCallback callback, void* param);
 
     content::WebPage* getWebPage() const { return m_webPage; }
 
-    CURLSH* getCurlShareHandle();
-    std::string getCookieJarPath();
-    net::WebCookieJarImpl* getCookieJar();
+    //CURLSH* getCurlShareHandle();
+    //std::string getCookieJarPath();
+    //net::WebCookieJarImpl* getCookieJar();
 
     std::set<jsValue>& getPersistentJsValue() { return m_persistentJsValue; }
 
@@ -378,7 +378,7 @@ protected:
     String m_netInterface;
 
     String m_proxy;
-    net::ProxyType m_proxyType;
+//    net::ProxyType m_proxyType;
 
     friend class ShowDevToolsTaskObserver;
     bool m_isCreatedDevTools;

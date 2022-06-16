@@ -16,7 +16,7 @@
 #include "net/WebURLLoaderManager.h"
 #include "net/ActivatingObjCheck.h"
 #include "net/DefaultFullPath.h"
-#include "net/cookies/WebCookieJarCurlImpl.h"
+//#include "net/cookies/WebCookieJarCurlImpl.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebDragOperation.h"
@@ -38,15 +38,15 @@
 #include "libplatform/libplatform.h"
 #include <shlwapi.h>
 
-// namespace net {
-// 
-// void setCookieJarPath(const WCHAR* path);
-// void setCookieJarFullPath(const WCHAR* path);
-// 
-// String getDefaultLocalStorageFullPath();
-// void setDefaultLocalStorageFullPath(const String& path);
-// 
-// }
+ namespace net {
+ 
+ //void setCookieJarPath(const WCHAR* path);
+ //void setCookieJarFullPath(const WCHAR* path);
+ //
+ String getDefaultLocalStorageFullPath();
+ void setDefaultLocalStorageFullPath(const String& path);
+ 
+ }
 
 namespace blink {
 extern char* g_navigatorPlatform;
@@ -74,53 +74,53 @@ void WKE_CALL_TYPE wkeInitialize()
     wke::wkeIsInit = true;
 }
 
-struct wkeProxyInfo {
-    net::ProxyType proxyType;
-    String hostname;
-    String username;
-    String password;
+//struct wkeProxyInfo {
+//    net::ProxyType proxyType;
+//    String hostname;
+//    String username;
+//    String password;
+//
+//    static WTF::PassOwnPtr<wkeProxyInfo> create(const wkeProxy& proxy) {
+//        WTF::PassOwnPtr<wkeProxyInfo> info = WTF::adoptPtr(new wkeProxyInfo());
+//        info->proxyType = net::HTTP;
+//
+//        if (proxy.hostname[0] != 0 && proxy.type >= WKE_PROXY_HTTP && proxy.type <= WKE_PROXY_SOCKS5HOSTNAME) {
+//            switch (proxy.type) {
+//            case WKE_PROXY_HTTP:           info->proxyType = net::HTTP; break;
+//            case WKE_PROXY_SOCKS4:         info->proxyType = net::Socks4; break;
+//            case WKE_PROXY_SOCKS4A:        info->proxyType = net::Socks4A; break;
+//            case WKE_PROXY_SOCKS5:         info->proxyType = net::Socks5; break;
+//            case WKE_PROXY_SOCKS5HOSTNAME: info->proxyType = net::Socks5Hostname; break;
+//            }
+//
+//            info->hostname = String::fromUTF8(proxy.hostname);
+//            info->username = String::fromUTF8(proxy.username);
+//            info->password = String::fromUTF8(proxy.password);
+//        }
+//        return info;
+//    }
+//};
 
-    static WTF::PassOwnPtr<wkeProxyInfo> create(const wkeProxy& proxy) {
-        WTF::PassOwnPtr<wkeProxyInfo> info = WTF::adoptPtr(new wkeProxyInfo());
-        info->proxyType = net::HTTP;
-
-        if (proxy.hostname[0] != 0 && proxy.type >= WKE_PROXY_HTTP && proxy.type <= WKE_PROXY_SOCKS5HOSTNAME) {
-            switch (proxy.type) {
-            case WKE_PROXY_HTTP:           info->proxyType = net::HTTP; break;
-            case WKE_PROXY_SOCKS4:         info->proxyType = net::Socks4; break;
-            case WKE_PROXY_SOCKS4A:        info->proxyType = net::Socks4A; break;
-            case WKE_PROXY_SOCKS5:         info->proxyType = net::Socks5; break;
-            case WKE_PROXY_SOCKS5HOSTNAME: info->proxyType = net::Socks5Hostname; break;
-            }
-
-            info->hostname = String::fromUTF8(proxy.hostname);
-            info->username = String::fromUTF8(proxy.username);
-            info->password = String::fromUTF8(proxy.password);
-        }
-        return info;
-    }
-};
-
-void WKE_CALL_TYPE wkeSetProxy(const wkeProxy* proxy)
-{
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    if (!proxy)
-        return;
-
-    WTF::OwnPtr<wkeProxyInfo> info = wkeProxyInfo::create(*proxy);
-
-    if (net::WebURLLoaderManager::sharedInstance())
-        net::WebURLLoaderManager::sharedInstance()->setProxyInfo(info->hostname, proxy->port, info->proxyType, info->username, info->password);
-}
-
-void WKE_CALL_TYPE wkeSetViewProxy(wkeWebView webView, wkeProxy* proxy)
-{
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    if (!webView || !proxy)
-        return;
-    WTF::OwnPtr<wkeProxyInfo> info = wkeProxyInfo::create(*proxy);
-    webView->setProxyInfo(info->hostname, proxy->port, info->proxyType, info->username, info->password);
-}
+//void WKE_CALL_TYPE wkeSetProxy(const wkeProxy* proxy)
+//{
+//    wke::checkThreadCallIsValid(__FUNCTION__);
+//    if (!proxy)
+//        return;
+//
+//    WTF::OwnPtr<wkeProxyInfo> info = wkeProxyInfo::create(*proxy);
+//
+//    if (net::WebURLLoaderManager::sharedInstance())
+//        net::WebURLLoaderManager::sharedInstance()->setProxyInfo(info->hostname, proxy->port, info->proxyType, info->username, info->password);
+//}
+//
+//void WKE_CALL_TYPE wkeSetViewProxy(wkeWebView webView, wkeProxy* proxy)
+//{
+//    wke::checkThreadCallIsValid(__FUNCTION__);
+//    if (!webView || !proxy)
+//        return;
+//    WTF::OwnPtr<wkeProxyInfo> info = wkeProxyInfo::create(*proxy);
+//    webView->setProxyInfo(info->hostname, proxy->port, info->proxyType, info->username, info->password);
+//}
 
 void WKE_CALL_TYPE wkeSetViewNetInterface(wkeWebView webView, const char* netInterface)
 {
@@ -136,8 +136,8 @@ void WKE_CALL_TYPE wkeConfigure(const wkeSettings* settings)
     wke::checkThreadCallIsValid(__FUNCTION__);
     if (!settings)
         return;
-    if (settings->mask & WKE_SETTING_PROXY)
-        wkeSetProxy(&settings->proxy);
+    //if (settings->mask & WKE_SETTING_PROXY)
+    //    wkeSetProxy(&settings->proxy);
 //     if (settings->mask & WKE_SETTING_PAINTCALLBACK_IN_OTHER_THREAD)
 //         blink::RuntimeEnabledFeatures::setUpdataInOtherThreadEnabled(true);
 }
@@ -778,50 +778,6 @@ const utf8* WKE_CALL_TYPE wkeGetCookie(wkeWebView webView)
     return webView->cookie();
 }
 
-void WKE_CALL_TYPE wkeSetCookie(wkeWebView webView, const utf8* url, const utf8* cookie)
-{
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    blink::KURL webUrl(blink::ParsedURLString, url);
-    blink::KURL webFirstPartyForCookies;
-    String webCookie(cookie);
-    webView->getCookieJar()->setCookie(webUrl, webFirstPartyForCookies, webCookie);
-}
-
-void WKE_CALL_TYPE wkeVisitAllCookie(wkeWebView webView, void* params, wkeCookieVisitor visitor)
-{
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    webView->getCookieJar()->visitAllCookie(params, (net::WebCookieJarImpl::CookieVisitor)visitor);
-}
-
-void WKE_CALL_TYPE wkePerformCookieCommand(wkeWebView webView, wkeCookieCommand command)
-{
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    CURL* curl = curl_easy_init();
-    if (!curl)
-        return;
-
-    std::string cookiesPath = webView->getCookieJarPath();
-    CURLSH* curlsh = webView->getCurlShareHandle();
-
-    curl_easy_setopt(curl, CURLOPT_SHARE, curlsh);
-    curl_easy_setopt(curl, CURLOPT_COOKIEJAR, cookiesPath.c_str());
-    
-    switch (command) {
-    case wkeCookieCommandClearAllCookies:
-        curl_easy_setopt(curl, CURLOPT_COOKIELIST, "ALL");
-        break;
-    case wkeCookieCommandClearSessionCookies:
-        curl_easy_setopt(curl, CURLOPT_COOKIELIST, "SESS");
-        break;
-    case wkeCookieCommandFlushCookiesToFile:
-        curl_easy_setopt(curl, CURLOPT_COOKIELIST, "FLUSH");
-        break;
-    case wkeCookieCommandReloadCookiesFromFile:
-        curl_easy_setopt(curl, CURLOPT_COOKIELIST, "RELOAD");
-        break;
-    }
-    curl_easy_cleanup(curl);
-}
 
 void WKE_CALL_TYPE wkeSetCookieEnabled(wkeWebView webView, bool enable)
 {
@@ -835,35 +791,6 @@ bool WKE_CALL_TYPE wkeIsCookieEnabled(wkeWebView webView)
     return webView->isCookieEnabled();
 }
 
-void WKE_CALL_TYPE wkeSetCookieJarPath(wkeWebView webView, const WCHAR* path)
-{
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    if (!path)
-        return;
-    
-    net::WebURLLoaderManager* manager = net::WebURLLoaderManager::sharedInstance();
-    if (!manager)
-        return;
-
-    std::vector<char> pathStrA = convertCookiesPathToUtf8(path);
-    if (pathStrA.size() == 0)
-        return;
-    net::WebURLLoaderManager::setCookieJarFullPath(&pathStrA[0]);
-}
-
-void WKE_CALL_TYPE wkeSetCookieJarFullPath(wkeWebView webView, const WCHAR* path)
-{
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    if (!path)
-        return;
-
-    std::vector<char> jarPathA;
-    WTF::WCharToMByte(path, wcslen(path), &jarPathA, CP_ACP);
-    if (0 == jarPathA.size())
-        return;
-    jarPathA.push_back('\0');
-    net::WebURLLoaderManager::setCookieJarFullPath(&jarPathA[0]);
-}
 
 void WKE_CALL_TYPE wkeSetLocalStorageFullPath(wkeWebView webView, const WCHAR* path)
 {
@@ -871,7 +798,7 @@ void WKE_CALL_TYPE wkeSetLocalStorageFullPath(wkeWebView webView, const WCHAR* p
     if (!path)
         return;
 
-    String pathString(path);
+	String pathString(path);
     net::setDefaultLocalStorageFullPath(pathString);
 }
 
@@ -1897,7 +1824,7 @@ void WKE_CALL_TYPE wkeSetFileSystem(WKE_FILE_OPEN pfnOpen, WKE_FILE_CLOSE pfnClo
     wke::checkThreadCallIsValid(__FUNCTION__);
     WKE_FILE_OPEN g_pfnOpen = pfnOpen;
     WKE_FILE_CLOSE g_pfnClose = pfnClose;
-    curl_set_file_system(pfnOpen, pfnClose, pfnSize, pfnRead, pfnSeek, nullptr);
+    //curl_set_file_system(pfnOpen, pfnClose, pfnSize, pfnRead, pfnSeek, nullptr);
 }
 
 const char* WKE_CALL_TYPE wkeWebViewName(wkeWebView webView)

@@ -182,7 +182,7 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>$(SolutionDir)..\out\$(Configuration)\;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>InjectTool.lib;version.lib;harfbuzz.lib;ots.lib;Crypt32.lib;Wldap32.lib;Imm32.lib;libxml.lib;zlib.lib;libcurl.lib;v8_5_7.lib;v8_5_7_1.lib;skia.lib;winmm.lib;Ws2_32.lib;Usp10.lib;Shlwapi.lib;wininet.lib;GDIPlus.lib;DbgHelp.lib;libjpeg.lib;libpng.lib;openssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>InjectTool.lib;version.lib;harfbuzz.lib;ots.lib;Crypt32.lib;Wldap32.lib;Imm32.lib;libxml.lib;zlib.lib;v8_5_7.lib;v8_5_7_1.lib;skia.lib;winmm.lib;Ws2_32.lib;Usp10.lib;Shlwapi.lib;wininet.lib;GDIPlus.lib;DbgHelp.lib;libjpeg.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)node$(TargetExt)</OutputFile>
       <ImportLibrary>$(OutDir)node.lib</ImportLibrary>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib</IgnoreSpecificDefaultLibraries>
@@ -550,8 +550,6 @@
     <ClCompile Include="..\..\gen\blink\core\InspectorTypeBuilder.cpp" />
     <ClCompile Include="..\..\gen\blink\core\XPathGrammar.cpp" />
     <ClCompile Include="..\..\net\ActivatingObjCheck.cpp" />
-    <ClCompile Include="..\..\net\cookies\CookieJarMgr.cpp" />
-    <ClCompile Include="..\..\net\cookies\WebCookieJarCurlImpl.cpp" />
     <ClCompile Include="..\..\net\DefaultFullPath.cpp" />
     <ClCompile Include="..\..\net\DiskCache.cpp" />
     <ClCompile Include="..\..\net\PageNetExtraData.cpp" />
@@ -1365,10 +1363,6 @@
     <ClCompile Include="..\..\gin\v8_platform.cc" />
     <ClCompile Include="..\..\net\AsyncFileStream.cpp" />
     <ClCompile Include="..\..\net\BlobResourceLoader.cpp" />
-    <ClCompile Include="..\..\net\cookies\CanonicalCookie.cpp" />
-    <ClCompile Include="..\..\net\cookies\CookieMonster.cpp" />
-    <ClCompile Include="..\..\net\cookies\CookieUtil.cpp" />
-    <ClCompile Include="..\..\net\cookies\ParsedCookie.cpp" />
     <ClCompile Include="..\..\net\DataURL.cpp" />
     <ClCompile Include="..\..\net\FileStream.cpp" />
     <ClCompile Include="..\..\net\FileSystem.cpp" />
@@ -1377,16 +1371,6 @@
     <ClCompile Include="..\..\net\MultipartHandle.cpp" />
     <ClCompile Include="..\..\net\PathWalker.cpp" />
     <ClCompile Include="..\..\net\SharedMemoryDataConsumerHandle.cpp" />
-    <ClCompile Include="..\..\net\websocket\SocketStreamErrorBase.cpp" />
-    <ClCompile Include="..\..\net\websocket\SocketStreamHandleBase.cpp" />
-    <ClCompile Include="..\..\net\websocket\SocketStreamHandleCurl.cpp" />
-    <ClCompile Include="..\..\net\websocket\WebSocketChannelImpl.cpp" />
-    <ClCompile Include="..\..\net\websocket\WebSocketDeflateFramer.cpp" />
-    <ClCompile Include="..\..\net\websocket\WebSocketDeflater.cpp" />
-    <ClCompile Include="..\..\net\websocket\WebSocketExtensionDispatcher.cpp" />
-    <ClCompile Include="..\..\net\websocket\WebSocketExtensionParser.cpp" />
-    <ClCompile Include="..\..\net\websocket\WebSocketHandshake.cpp" />
-    <ClCompile Include="..\..\net\websocket\WebSocketOneFrame.cpp" />
     <ClCompile Include="..\..\net\WebURLLoaderManager.cpp" />
     <ClCompile Include="..\..\net\WebURLLoaderWinINet.cpp" />
     <ClCompile Include="..\..\node\cares\src\ares_cancel.c">
@@ -5869,8 +5853,6 @@
     <ClInclude Include="..\..\gen\blink\bindings\modules\v8\V8DOMFileSystemSync.h" />
     <ClInclude Include="..\..\net\ActivatingObjCheck.h" />
     <ClInclude Include="..\..\net\CancelledReason.h" />
-    <ClInclude Include="..\..\net\cookies\CookieJarMgr.h" />
-    <ClInclude Include="..\..\net\cookies\WebCookieJarCurlImpl.h" />
     <ClInclude Include="..\..\net\DefaultFullPath.h" />
     <ClInclude Include="..\..\net\DiskCache.h" />
     <ClInclude Include="..\..\net\FlattenHTTPBodyElement.h" />
@@ -6711,11 +6693,6 @@
     <ClInclude Include="..\..\net\AsyncFileStream.h" />
     <ClInclude Include="..\..\net\BlinkSynchronousLoader.h" />
     <ClInclude Include="..\..\net\BlobResourceLoader.h" />
-    <ClInclude Include="..\..\net\cookies\CanonicalCookie.h" />
-    <ClInclude Include="..\..\net\cookies\CookieConstants.h" />
-    <ClInclude Include="..\..\net\cookies\CookieMonster.h" />
-    <ClInclude Include="..\..\net\cookies\CookieUtil.h" />
-    <ClInclude Include="..\..\net\cookies\ParsedCookie.h" />
     <ClInclude Include="..\..\net\DataURL.h" />
     <ClInclude Include="..\..\net\FileStream.h" />
     <ClInclude Include="..\..\net\FileStreamClient.h" />
@@ -6728,21 +6705,7 @@
     <ClInclude Include="..\..\net\RequestPeer.h" />
     <ClInclude Include="..\..\net\SharedMemoryDataConsumerHandle.h" />
     <ClInclude Include="..\..\net\SharedMemoryReceivedDataFactory.h" />
-    <ClInclude Include="..\..\net\SSLHandle.h" />
     <ClInclude Include="..\..\net\StreamReader.h" />
-    <ClInclude Include="..\..\net\websocket\SocketStreamError.h" />
-    <ClInclude Include="..\..\net\websocket\SocketStreamErrorBase.h" />
-    <ClInclude Include="..\..\net\websocket\SocketStreamHandle.h" />
-    <ClInclude Include="..\..\net\websocket\SocketStreamHandleBase.h" />
-    <ClInclude Include="..\..\net\websocket\SocketStreamHandleClient.h" />
-    <ClInclude Include="..\..\net\websocket\WebSocketChannelImpl.h" />
-    <ClInclude Include="..\..\net\websocket\WebSocketDeflateFramer.h" />
-    <ClInclude Include="..\..\net\websocket\WebSocketDeflater.h" />
-    <ClInclude Include="..\..\net\websocket\WebSocketExtensionDispatcher.h" />
-    <ClInclude Include="..\..\net\websocket\WebSocketExtensionParser.h" />
-    <ClInclude Include="..\..\net\websocket\WebSocketExtensionProcessor.h" />
-    <ClInclude Include="..\..\net\websocket\WebSocketHandshake.h" />
-    <ClInclude Include="..\..\net\websocket\WebSocketOneFrame.h" />
     <ClInclude Include="..\..\net\WebURLLoaderInternal.h" />
     <ClInclude Include="..\..\net\WebURLLoaderManager.h" />
     <ClInclude Include="..\..\net\WebURLLoaderWinINet.h" />
@@ -7026,8 +6989,6 @@
     <ClInclude Include="..\..\third_party\WebKit\public\platform\WebContentLayer.h" />
     <ClInclude Include="..\..\third_party\WebKit\public\platform\WebContentLayerClient.h" />
     <ClInclude Include="..\..\third_party\WebKit\public\platform\WebConvertableToTraceFormat.h" />
-    <ClInclude Include="..\..\third_party\WebKit\public\platform\WebCookie.h" />
-    <ClInclude Include="..\..\third_party\WebKit\public\platform\WebCookieJar.h" />
     <ClInclude Include="..\..\third_party\WebKit\public\platform\WebCredential.h" />
     <ClInclude Include="..\..\third_party\WebKit\public\platform\WebCredentialManagerClient.h" />
     <ClInclude Include="..\..\third_party\WebKit\public\platform\WebCredentialManagerError.h" />

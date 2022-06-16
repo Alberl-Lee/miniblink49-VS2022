@@ -1,6 +1,6 @@
 #include "net/DefaultFullPath.h"
 #include "third_party/WebKit/Source/wtf/ThreadingPrimitives.h"
-#include "third_party/libcurl/include/curl/curl.h"
+//#include "third_party/libcurl/include/curl/curl.h"
 #include "net/WebURLLoaderManagerUtil.h"
 #include <Shlwapi.h>
 
@@ -10,8 +10,8 @@ static String* kDefaultLocalStorageFullPath = nullptr;
 
 void setDefaultLocalStorageFullPath(const String& path)
 {
-    WTF::Mutex* mutex = sharedResourceMutex(CURL_LOCK_DATA_COOKIE);
-    WTF::Locker<WTF::Mutex> locker(*mutex);
+    //WTF::Mutex* mutex = sharedResourceMutex(CURL_LOCK_DATA_COOKIE);
+    //WTF::Locker<WTF::Mutex> locker(*mutex);
 
     if (kDefaultLocalStorageFullPath)
         delete kDefaultLocalStorageFullPath;
@@ -29,8 +29,8 @@ void setDefaultLocalStorageFullPath(const String& path)
 
 String getDefaultLocalStorageFullPath()
 {
-    WTF::Mutex* mutex = sharedResourceMutex(CURL_LOCK_DATA_COOKIE);
-    WTF::Locker<WTF::Mutex> locker(*mutex);
+    //WTF::Mutex* mutex = sharedResourceMutex(CURL_LOCK_DATA_COOKIE);
+    //WTF::Locker<WTF::Mutex> locker(*mutex);
 
     if (kDefaultLocalStorageFullPath)
         return *kDefaultLocalStorageFullPath;

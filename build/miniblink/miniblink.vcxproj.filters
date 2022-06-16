@@ -652,14 +652,8 @@
     <Filter Include="third_party\ots\include">
       <UniqueIdentifier>{448afa43-451e-4a69-8fbe-c1f466d11021}</UniqueIdentifier>
     </Filter>
-    <Filter Include="net\cookies">
-      <UniqueIdentifier>{ff555750-3752-46ba-877f-ff9cc64c4b20}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cc\layers">
       <UniqueIdentifier>{213bd9dc-f6b0-4fcf-9e5f-b444713df395}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="net\websocket">
-      <UniqueIdentifier>{eac8e4db-7f21-4a45-9040-df20582d4727}</UniqueIdentifier>
     </Filter>
     <Filter Include="third_party\Webkit\Source\modules\websockets">
       <UniqueIdentifier>{5169d5cb-5a12-4182-9b02-949ebc6810f4}</UniqueIdentifier>
@@ -8025,9 +8019,6 @@
     <ClCompile Include="..\..\cc\blink\WebImageLayerImpl.cpp">
       <Filter>cc\blink</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\content\browser\WebFrameClientImpl.cpp">
-      <Filter>content\browser</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\third_party\WebKit\Source\wtf\text\WTFStringUtil.cpp">
       <Filter>third_party\Webkit\Source\wtf\text</Filter>
     </ClCompile>
@@ -8331,18 +8322,6 @@
     <ClCompile Include="..\..\third_party\WebKit\Source\core\fileapi\FileReaderLoader.cpp">
       <Filter>third_party\Webkit\Source\core\fileapi</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\net\cookies\ParsedCookie.cpp">
-      <Filter>net\cookies</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\cookies\CanonicalCookie.cpp">
-      <Filter>net\cookies</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\cookies\CookieMonster.cpp">
-      <Filter>net\cookies</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\cookies\CookieUtil.cpp">
-      <Filter>net\cookies</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\base\time\time.cc">
       <Filter>base\time</Filter>
     </ClCompile>
@@ -8385,44 +8364,11 @@
     <ClCompile Include="..\..\content\web_impl_win\WebURLLoaderImplCurl.cpp">
       <Filter>content\web_impl_win</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\net\WebURLLoaderManager.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\net\MultipartHandle.cpp">
       <Filter>net</Filter>
     </ClCompile>
     <ClCompile Include="..\..\base\thread.cc">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\websocket\WebSocketChannelImpl.cpp">
-      <Filter>net\websocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\websocket\WebSocketDeflateFramer.cpp">
-      <Filter>net\websocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\websocket\WebSocketDeflater.cpp">
-      <Filter>net\websocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\websocket\WebSocketExtensionDispatcher.cpp">
-      <Filter>net\websocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\websocket\WebSocketExtensionParser.cpp">
-      <Filter>net\websocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\websocket\WebSocketHandshake.cpp">
-      <Filter>net\websocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\websocket\WebSocketOneFrame.cpp">
-      <Filter>net\websocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\websocket\SocketStreamErrorBase.cpp">
-      <Filter>net\websocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\websocket\SocketStreamHandleBase.cpp">
-      <Filter>net\websocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\websocket\SocketStreamHandleCurl.cpp">
-      <Filter>net\websocket</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gen\blink\bindings\modules\v8\V8WebSocket.cpp">
       <Filter>gen\blink\bindings\modules\v8</Filter>
@@ -8921,9 +8867,6 @@
     </ClCompile>
     <ClCompile Include="..\..\content\browser\CheckReEnter.cpp">
       <Filter>content\browser</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\WebURLLoaderWinINet.cpp">
-      <Filter>net</Filter>
     </ClCompile>
     <ClCompile Include="..\..\content\web_impl_win\WebURLLoaderImpl.cpp">
       <Filter>content\web_impl_win</Filter>
@@ -9597,9 +9540,6 @@
     <ClCompile Include="..\..\content\ui\DragHandle.cpp">
       <Filter>content\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\net\WebURLLoaderManagerUtil.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gen\blink\bindings\core\v8\V8External.cpp">
       <Filter>gen\blink\bindings\core\v8</Filter>
     </ClCompile>
@@ -9669,9 +9609,6 @@
     <ClCompile Include="..\..\third_party\WebKit\Source\web\WebEntities.cpp">
       <Filter>third_party\Webkit\Source\web</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\net\cookies\WebCookieJarCurlImpl.cpp">
-      <Filter>net\cookies</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\content\resources\MediaPlayerData.cpp">
       <Filter>content\resources</Filter>
     </ClCompile>
@@ -9686,9 +9623,6 @@
     </ClCompile>
     <ClCompile Include="..\..\third_party\WebKit\Source\web\FullscreenControllerNone.cpp">
       <Filter>third_party\Webkit\Source\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\net\cookies\CookieJarMgr.cpp">
-      <Filter>net\cookies</Filter>
     </ClCompile>
     <ClCompile Include="..\..\third_party\WebKit\Source\core\dom\URLSearchParams.cpp">
       <Filter>third_party\Webkit\Source\core\dom</Filter>
@@ -14214,12 +14148,6 @@
       <Filter>third_party\Webkit\public\platform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\third_party\WebKit\public\platform\WebConvertableToTraceFormat.h">
-      <Filter>third_party\Webkit\public\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\third_party\WebKit\public\platform\WebCookie.h">
-      <Filter>third_party\Webkit\public\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\third_party\WebKit\public\platform\WebCookieJar.h">
       <Filter>third_party\Webkit\public\platform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\third_party\WebKit\public\platform\WebCredential.h">
@@ -19937,9 +19865,6 @@
     <ClInclude Include="..\..\content\browser\WebPageImpl.h">
       <Filter>content\browser</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\content\browser\WebFrameClientImpl.h">
-      <Filter>content\browser</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\content\browser\WebPage.h">
       <Filter>content\browser</Filter>
     </ClInclude>
@@ -20099,12 +20024,6 @@
     <ClInclude Include="..\..\third_party\WebKit\Source\web\StorageQuotaClientImpl.h">
       <Filter>third_party\Webkit\Source\web</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\net\WebURLLoaderManager.h">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\WebURLLoaderInternal.h">
-      <Filter>net</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\content\web_impl_win\WebURLLoaderImplCurl.h">
       <Filter>content\web_impl_win</Filter>
     </ClInclude>
@@ -20131,9 +20050,6 @@
     </ClInclude>
     <ClInclude Include="..\..\cc\raster\RasterResouce.h">
       <Filter>cc\raster</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\WebURLLoaderWinINet.h">
-      <Filter>net</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gen\blink\bindings\modules\v8\V8HTMLVideoElementPartial.h">
       <Filter>gen\blink\bindings\modules\v8</Filter>
@@ -20885,21 +20801,6 @@
     <ClInclude Include="..\..\third_party\WebKit\Source\core\fileapi\FileReaderLoaderClient.h">
       <Filter>third_party\Webkit\Source\core\fileapi</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\net\cookies\ParsedCookie.h">
-      <Filter>net\cookies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\cookies\CanonicalCookie.h">
-      <Filter>net\cookies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\cookies\CookieUtil.h">
-      <Filter>net\cookies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\cookies\CookieConstants.h">
-      <Filter>net\cookies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\cookies\CookieMonster.h">
-      <Filter>net\cookies</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\base\time\time.h">
       <Filter>base\time</Filter>
     </ClInclude>
@@ -20948,53 +20849,11 @@
     <ClInclude Include="..\..\net\MultipartHandle.h">
       <Filter>net</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\net\SSLHandle.h">
-      <Filter>net</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\base\thread.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\net\BlinkSynchronousLoader.h">
       <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\WebSocketChannelImpl.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\WebSocketDeflateFramer.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\WebSocketDeflater.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\WebSocketExtensionDispatcher.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\WebSocketExtensionParser.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\WebSocketExtensionProcessor.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\WebSocketHandshake.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\WebSocketOneFrame.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\SocketStreamError.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\SocketStreamErrorBase.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\SocketStreamHandle.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\SocketStreamHandleBase.h">
-      <Filter>net\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\websocket\SocketStreamHandleClient.h">
-      <Filter>net\websocket</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gen\blink\bindings\modules\v8\V8WebSocket.h">
       <Filter>gen\blink\bindings\modules\v8</Filter>
@@ -21605,17 +21464,8 @@
     <ClInclude Include="..\..\content\browser\PlatformMessagePortChannel.h">
       <Filter>content\browser</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\net\WebURLLoaderManagerUtil.h">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\WebURLLoaderManagerMainTask.h">
-      <Filter>net</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\wke\wkedefine.h">
       <Filter>wke</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\WebURLLoaderManagerSetupInfo.h">
-      <Filter>net</Filter>
     </ClInclude>
     <ClInclude Include="..\..\net\FlattenHTTPBodyElement.h">
       <Filter>net</Filter>
@@ -21977,9 +21827,6 @@
     <ClInclude Include="..\..\net\CancelledReason.h">
       <Filter>net</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\net\WebURLLoaderManagerAsynTask.h">
-      <Filter>net</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\wke\wkeNetHook.h">
       <Filter>wke</Filter>
     </ClInclude>
@@ -22029,9 +21876,6 @@
     <ClInclude Include="..\..\third_party\WebKit\Source\web\WebEntities.h">
       <Filter>third_party\Webkit\Source\web</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\net\cookies\WebCookieJarCurlImpl.h">
-      <Filter>net\cookies</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\third_party\WebKit\Source\wtf\PartitionAllocator.h">
       <Filter>third_party\Webkit\Source\wtf</Filter>
     </ClInclude>
@@ -22040,9 +21884,6 @@
     </ClInclude>
     <ClInclude Include="..\..\third_party\WebKit\Source\wtf\PageAllocator.h">
       <Filter>third_party\Webkit\Source\wtf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\net\cookies\CookieJarMgr.h">
-      <Filter>net\cookies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\third_party\WebKit\Source\core\dom\URLSearchParams.h">
       <Filter>third_party\Webkit\Source\core\dom</Filter>

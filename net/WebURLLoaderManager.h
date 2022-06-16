@@ -31,9 +31,9 @@
 #define HTTP_ONLY 
 
 #include "net/CancelledReason.h"
-#include "net/ProxyType.h"
+//#include "net/ProxyType.h"
 
-#include "third_party/libcurl/include/curl/curl.h"
+//#include "third_party/libcurl/include/curl/curl.h"
 #include "third_party/WebKit/Source/platform/Timer.h"
 
 #include "third_party/WebKit/Source/wtf/Vector.h"
@@ -90,17 +90,17 @@ public:
     void removeLiveJobs(int jobId);
     int addLiveJobs(JobHead* job);
 
-    CURLSH* getCurlShareHandle() const;
+    //CURLSH* getCurlShareHandle() const;
 
     //const char* getCookieJarFileName() const;
 
     void dispatchSynchronousJob(WebURLLoaderInternal*);
 
-    void setProxyInfo(const String& host,
-                      unsigned long port,
-                      ProxyType type,
-                      const String& username,
-                      const String& password);
+    //void setProxyInfo(const String& host,
+    //                  unsigned long port,
+    //                  ProxyType type,
+    //                  const String& username,
+    //                  const String& password);
 
     void shutdown();
     bool isShutdown() const { return m_isShutdown; }
@@ -144,24 +144,24 @@ private:
     void startOnIoThread(int jobId);
     void timeoutOnMainThread(int jobId);
 
-    void dispatchSynchronousJobOnIoThread(WebURLLoaderInternal* job, InitializeHandleInfo* info, CURLcode* ret, int* isCallFinish);
+    //void dispatchSynchronousJobOnIoThread(WebURLLoaderInternal* job, InitializeHandleInfo* info, CURLcode* ret, int* isCallFinish);
 
     void initCookieSession(const char* cookiePath);
 
     static WebURLLoaderManager* m_sharedInstance;
 
     Vector<WebURLLoaderInternal*> m_resourceHandleList;
-    CURLM* m_curlMultiHandle;
+    //CURLM* m_curlMultiHandle;
     //CURLSH* m_curlShareHandle;
     //char* m_cookieJarFileName;
     WebCookieJarImpl* m_shareCookieJar;
 
-    char m_curlErrorBuffer[CURL_ERROR_SIZE];
+    //char m_curlErrorBuffer[CURL_ERROR_SIZE];
     const CString m_certificatePath;
     int m_runningJobs;
     blink::WebThread* m_thread;
     String m_proxy;
-    ProxyType m_proxyType;
+    //ProxyType m_proxyType;
     bool m_isShutdown;
 
     friend class WebURLLoaderManagerMainTask;

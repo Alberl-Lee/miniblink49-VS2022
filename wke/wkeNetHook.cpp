@@ -36,14 +36,6 @@ void WKE_CALL_TYPE wkeNetSetHTTPHeaderField(wkeNetJob jobPtr, const wchar_t* key
         else
             job->firstRequest()->setHTTPHeaderField(keyString, String(value));
 
-        if (job->m_initializeHandleInfo) { // setHttpResponseDataToJobWhenDidReceiveResponseOnMainThread里m_initializeHandleInfo为空
-            curl_slist* headers = job->m_initializeHandleInfo->headers;
-            curl_slist_free_all(headers);
-            headers = nullptr;
-            net::HeaderVisitor visitor(&headers);
-            job->firstRequest()->visitHTTPHeaderFields(&visitor);
-            job->m_initializeHandleInfo->headers = headers;
-        }
     }
 }
 
