@@ -33,7 +33,7 @@ miniblink是基于chromium的浏览器控件，也可以用来开发软件（类
 Q群956223415
 
 
-# 致谢 Thanks
+# 致谢
 
 特别感谢好基友weolar，他是miniblink、kdgui的作者
 
